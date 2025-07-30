@@ -60,6 +60,9 @@ spec:
       hostAliases:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if semverCompare ">=1.33-0" .Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .Values.enterpriseGateway.hostUsers }}
+      {{- end }}
       containers:
         - name: gateway
           image: "{{ template "loki.image" . }}"

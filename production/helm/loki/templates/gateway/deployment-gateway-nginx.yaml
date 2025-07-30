@@ -49,6 +49,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end -}}
+      {{- if semverCompare ">=1.33-0" .Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .Values.gateway.hostUsers }}
+      {{- end }}
       {{- include "loki.gatewayPriorityClassName" . | nindent 6 }}
       securityContext:
         {{- toYaml .Values.gateway.podSecurityContext | nindent 8 }}

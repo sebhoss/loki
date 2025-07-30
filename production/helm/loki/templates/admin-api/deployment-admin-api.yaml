@@ -58,6 +58,9 @@ spec:
       hostAliases:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if semverCompare ">=1.33-0" .Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .Values.adminApi.hostUsers }}
+      {{- end }}
       containers:
         - name: admin-api
           image: "{{ template "loki.image" . }}"

@@ -35,6 +35,9 @@ spec:
       {{- with .Values.enterprise.provisioner.priorityClassName }}
       priorityClassName: {{ . }}
       {{- end }}
+      {{- if semverCompare ">=1.33-0" .Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .Values.enterprise.provisioner.hostUsers }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.enterprise.provisioner.securityContext | nindent 8 }}
       {{- with .Values.imagePullSecrets }}

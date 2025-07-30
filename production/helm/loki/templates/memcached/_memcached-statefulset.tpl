@@ -58,6 +58,9 @@ spec:
       {{- if .priorityClassName }}
       priorityClassName: {{ .priorityClassName }}
       {{- end }}
+      {{- if semverCompare ">=1.33-0" $.Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .hostUsers }}
+      {{- end }}
       securityContext:
         {{- toYaml $.ctx.Values.memcached.podSecurityContext | nindent 8 }}
       initContainers:

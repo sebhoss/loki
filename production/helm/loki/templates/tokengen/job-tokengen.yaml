@@ -35,6 +35,9 @@ spec:
       {{- with .Values.enterprise.tokengen.priorityClassName }}
       priorityClassName: {{ . }}
       {{- end }}
+      {{- if semverCompare ">=1.33-0" .Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .Values.enterprise.tokengen.hostUsers }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.enterprise.tokengen.securityContext | nindent 8 }}
       {{- if .Values.imagePullSecrets }}

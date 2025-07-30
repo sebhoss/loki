@@ -63,6 +63,9 @@ spec:
       securityContext:
         {{- toYaml .Values.loki.podSecurityContext | nindent 8 }}
       terminationGracePeriodSeconds: {{ .Values.read.terminationGracePeriodSeconds }}
+      {{- if semverCompare ">=1.33-0" .Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .Values.read.hostUsers }}
+      {{- end }}
       containers:
         - name: loki
           image: {{ include "loki.image" . }}

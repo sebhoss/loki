@@ -72,6 +72,9 @@ spec:
       securityContext:
         {{- toYaml .Values.loki.podSecurityContext | nindent 8 }}
       terminationGracePeriodSeconds: {{ .Values.write.terminationGracePeriodSeconds }}
+      {{- if semverCompare ">=1.33-0" .Capabilities.KubeVersion.Version }}
+      hostUsers: {{ .Values.write.hostUsers }}
+      {{- end }}
       {{- if .Values.write.initContainers }}
       initContainers:
         {{- with .Values.write.initContainers }}
