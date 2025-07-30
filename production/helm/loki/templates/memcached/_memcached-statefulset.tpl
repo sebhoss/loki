@@ -58,7 +58,7 @@ spec:
       {{- if .priorityClassName }}
       priorityClassName: {{ .priorityClassName }}
       {{- end }}
-      {{- if semverCompare ">=1.33-0" $.Capabilities.KubeVersion.Version }}
+      {{- if and (semverCompare ">=1.33-0" (include "loki.kubeVersion" $.ctx)) (kindIs "bool" .hostUsers) }}
       hostUsers: {{ .hostUsers }}
       {{- end }}
       securityContext:

@@ -681,7 +681,7 @@ enterprise:
     # -- The name of the PriorityClass for tokengen Pods
     priorityClassName: ""
     # -- Use the host's user namespace in tokengen pods
-    hostUsers: true
+    hostUsers: nil
   # -- Configuration for `provisioner` target
   # Note: Uses tokengenJob.adminTokenSecret value to mount the admin token used to call the admin api.
   provisioner:
@@ -715,7 +715,7 @@ enterprise:
     # -- The name of the PriorityClass for provisioner Job
     priorityClassName: null
     # -- Use the host's user namespace in provisioner pods
-    hostUsers: true
+    hostUsers: nil
     # -- Run containers as user `enterprise-logs(uid=10001)`
     securityContext:
       runAsNonRoot: true
@@ -783,6 +783,8 @@ test:
     digest: null
     # -- Docker image pull policy
     pullPolicy: IfNotPresent
+  # -- Use the host's user namespace in test pods
+  hostUsers: nil
 # The Loki canary pushes logs to and queries from this loki installation to test
 # that it's working correctly
 lokiCanary:
@@ -828,7 +830,7 @@ lokiCanary:
   # -- The name of the PriorityClass for loki-canary pods
   priorityClassName: null
   # -- Use the host's user namespace in loki-canary pods
-  hostUsers: true
+  hostUsers: nil
   # -- Image to use for loki canary
   image:
     # -- The Docker registry
@@ -1025,7 +1027,7 @@ adminApi:
   # -- Grace period to allow the admin-api to shutdown before it is killed
   terminationGracePeriodSeconds: 60
   # -- Use the host's user namespace in admin-api pods
-  hostUsers: true
+  hostUsers: nil
 ######################################################################################################################
 #
 # Gateway and Ingress
@@ -1121,7 +1123,7 @@ gateway:
         - ALL
     allowPrivilegeEscalation: false
   # -- Use the host's user namespace in the gateway
-  hostUsers: true
+  hostUsers: nil
   # -- Resource requests and limits for the gateway
   resources: {}
   # -- Containers to add to the gateway pods
@@ -1263,7 +1265,7 @@ enterpriseGateway:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the `gateway` pod
-  hostUsers: true
+  hostUsers: nil
   # -- Additional CLI arguments for the `gateway` target
   extraArgs: {}
   # -- Environment variables from secrets or configmaps to add to the enterprise gateway pods
@@ -1481,7 +1483,7 @@ singleBinary:
   # -- Grace period to allow the single binary to shutdown before it is killed
   terminationGracePeriodSeconds: 30
   # -- Use the host's user namespace in the single binary pods
-  hostUsers: true
+  hostUsers: nil
   # -- Affinity for single binary pods.
   # @default -- Hard node anti-affinity
   affinity:
@@ -1607,7 +1609,7 @@ write:
   # all data and to successfully leave the member ring on shutdown.
   terminationGracePeriodSeconds: 300
   # -- Use the host's user namespace in the write pods.
-  hostUsers: true
+  hostUsers: nil
   # -- Affinity for write pods.
   # @default -- Hard node anti-affinity
   affinity:
@@ -1727,7 +1729,7 @@ read:
   # -- Grace period to allow the read to shutdown before it is killed
   terminationGracePeriodSeconds: 30
   # -- Use the host's user namespace in the read pods.
-  hostUsers: true
+  hostUsers: nil
   # -- Affinity for read pods.
   # @default -- Hard node anti-affinity
   affinity:
@@ -1839,7 +1841,7 @@ backend:
   # all data and to successfully leave the member ring on shutdown.
   terminationGracePeriodSeconds: 300
   # -- Use the host's user namespace in the backend pods.
-  hostUsers: true
+  hostUsers: nil
   # -- Affinity for backend pods.
   # @default -- Hard node anti-affinity
   affinity:
@@ -1900,7 +1902,7 @@ ingester:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the ingester
-  hostUsers: true
+  hostUsers: nil
   autoscaling:
     # -- Enable autoscaling for the ingester
     enabled: false
@@ -2093,7 +2095,7 @@ distributor:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the distributor
-  hostUsers: true
+  hostUsers: nil
   autoscaling:
     # -- Enable autoscaling for the distributor
     enabled: false
@@ -2191,7 +2193,7 @@ querier:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the querier
-  hostUsers: true
+  hostUsers: nil
   autoscaling:
     # -- Enable autoscaling for the querier, this is only used if `indexGateway.enabled: true`
     enabled: false
@@ -2298,7 +2300,7 @@ queryFrontend:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the query-frontend
-  hostUsers: true
+  hostUsers: nil
   autoscaling:
     # -- Enable autoscaling for the query-frontend
     enabled: false
@@ -2394,7 +2396,7 @@ queryScheduler:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the query-scheduler
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the query-scheduler image. Overrides `loki.image.registry`
     registry: null
@@ -2460,7 +2462,7 @@ indexGateway:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the index-gateway
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the index-gateway image. Overrides `loki.image.registry`
     registry: null
@@ -2554,7 +2556,7 @@ compactor:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the compactor
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the compactor image. Overrides `loki.image.registry`
     registry: null
@@ -2666,7 +2668,7 @@ bloomGateway:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the bloom-gateway
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the bloom-gateway image. Overrides `loki.image.registry`
     registry: null
@@ -2769,7 +2771,7 @@ bloomPlanner:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the bloom-planner
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the bloom-planner image. Overrides `loki.image.registry`
     registry: null
@@ -2872,7 +2874,7 @@ bloomBuilder:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the boom-builder
-  hostUsers: true
+  hostUsers: nil
   autoscaling:
     # -- Enable autoscaling for the bloom-builder
     enabled: false
@@ -2964,7 +2966,7 @@ patternIngester:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the pattern ingester
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the pattern ingester image. Overrides `loki.image.registry`
     registry: null
@@ -3084,7 +3086,7 @@ ruler:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the ruler
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the ruler image. Overrides `loki.image.registry`
     registry: null
@@ -3238,7 +3240,7 @@ overridesExporter:
   #    hostnames:
   #      - domain.tld
   # -- Use the host's user namespace in the overrides-exporter
-  hostUsers: true
+  hostUsers: nil
   image:
     # -- The Docker registry for the overrides-exporter image. Overrides `loki.image.registry`
     registry: null
@@ -3402,7 +3404,7 @@ resultsCache:
   # -- The name of the PriorityClass for results-cache pods
   priorityClassName: null
   # -- Use the host's user namespace in results-cache pods
-  hostUsers: true
+  hostUsers: nil
   # -- Labels for results-cache pods
   podLabels: {}
   # -- Annotations for results-cache pods
@@ -3511,7 +3513,7 @@ chunksCache:
   # -- The name of the PriorityClass for chunks-cache pods
   priorityClassName: null
   # -- Use the host's user namespace in chunks-cache pods
-  hostUsers: true
+  hostUsers: nil
   # -- Labels for chunks-cache pods
   podLabels: {}
   # -- Annotations for chunks-cache pods
@@ -3623,7 +3625,7 @@ chunksCache:
     # -- The name of the PriorityClass for chunks-cache-l2 pods
     priorityClassName: null
     # -- Use the host's user namespace in chunks-cache-l2 pods
-    hostUsers: true
+    hostUsers: nil
     # -- Labels for chunks-cache-l2 pods
     podLabels: {}
     # -- Annotations for chunks-cache-l2 pods
@@ -4040,7 +4042,7 @@ tableManager:
   # -- Grace period to allow the table-manager to shutdown before it is killed
   terminationGracePeriodSeconds: 30
   # -- Use the host's user namespace in table-manager pods
-  hostUsers: true
+  hostUsers: nil
   # -- Affinity for table-manager pods.
   # @default -- Hard node and anti-affinity
   affinity:
